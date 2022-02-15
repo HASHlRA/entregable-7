@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         playerAudioSource = GetComponent<AudioSource>();
         cameraAudioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
+        // Instancia las partículas para prepararlas
+        explosionParticles = Instantiate(explosionParticles, transform.position, explosionParticles.transform.rotation);
+        fireworksParticles = Instantiate(fireworksParticles, transform.position, fireworksParticles.transform.rotation);
     }
 
     // Por cada frame del juego
@@ -66,6 +70,60 @@ public class Player : MonoBehaviour
             // Mantiene al player a esa posición
             transform.position = new Vector3(transform.position.x, yLimit, transform.position.z);
             playerRigidbody.velocity = Vector3.zero;
+        }
+    }
+
+    // Colisión de GameObjects ( Money y Bomb )
+    private void OnTriggerEnter(Collider other)
+    {
+        // Colisiona con el GameObject "Money"
+        if (other.gameObject.CompareTag("Money") && !gameOver)
+        {
+            // Suma +1 al número total de "Money" obtenidos
+            TotalMoney++;
+
+            // Reproduce el SFX
+            playerAudioSource.PlayOneShot(BlipAudio);
+
+            // Posiciona y reproduce las partículas en la posición de ese GameObject
+            fireworksParticles.transform.position = other.gameObject.transform.position;
+            fireworksParticles.Play();
+
+            // Destruye el otro GameObject
+            Destroy(other.gameObject);
+
+            // Muestra por consola el texto con el total de monedas
+            Debug.Log($"Tienes " + TotalMoney + " dólares en total.");
+        }
+
+        // Si colisiona con una bomba
+        if (other.gameObject.CompareTag("Bomb"))
+        {
+            // Reproduce el SFX
+            playerAudioSource.PlayOneShot(BoomAudio);
+
+            // Posiciona y reproduce las partículas en la posición de ese GameObject
+            explosionParticles.transform.position = other.gameObject.transform.position;
+            explosionParticles.Play();
+
+            // Destruye el otro GameObject
+            Destroy(other.gameObject);
+
+            // Llama a la función GameOver
+            GameOver();
+        }
+
+        // Función que da por finalizado el juego
+        private void GameOver()
+        {
+            // Indica que el juego ha finalizado
+            gameOver = true;
+
+            // Bajar el volumen de la música de fondo
+            cameraAudioSource.volume = 0.01f;
+
+            // Muestra en consola tu resultado
+            Debug.Log($"GAME OVER: Has conseguido " + TotalMoney + " monedas.");
         }
     }
 }
