@@ -49,9 +49,6 @@ public class Player : MonoBehaviour
         playerAudioSource = GetComponent<AudioSource>();
         cameraAudioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
 
-        // Instancia las partículas para prepararlas
-        explosionParticles = Instantiate(explosionParticles, transform.position, explosionParticles.transform.rotation);
-        fireworksParticles = Instantiate(fireworksParticles, transform.position, fireworksParticles.transform.rotation);
     }
 
     // Por cada frame del juego
@@ -112,10 +109,10 @@ public class Player : MonoBehaviour
             // Llama a la función GameOver
             GameOver();
         }
-
-        // Función que da por finalizado el juego
-        private void GameOver()
-        {
+    }
+    // Función que da por finalizado el juego
+    private void GameOver()
+    {    {
             // Indica que el juego ha finalizado
             gameOver = true;
 
