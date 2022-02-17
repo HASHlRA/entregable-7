@@ -108,6 +108,7 @@ public class Player : MonoBehaviour
 
             // Llama a la función GameOver
             GameOver();
+
         }
     }
     // Función que da por finalizado el juego

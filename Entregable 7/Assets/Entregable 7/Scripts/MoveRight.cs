@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveRight : MonoBehaviour
 {
     // Velocidad
-    public float directionSpeed = 10f;
+    public float directionSpeed = 8f;
 
     // Límite en X
     private float xRange = 14f;

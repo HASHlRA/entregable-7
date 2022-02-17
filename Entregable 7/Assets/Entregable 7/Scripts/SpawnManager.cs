@@ -71,8 +71,6 @@ public class SpawnManager : MonoBehaviour
             // Spawnea el objeto
             spawnedObject = Instantiate(objectsPrefab[randomObject], randomPosition, objectsPrefab[randomObject].transform.rotation);
 
-            // Cambia la dirección del objeto spawneado
-            spawnedObject.GetComponent<MoveRight>().directionSpeed *= spawnDirection[direction];
         }
     }
 }
