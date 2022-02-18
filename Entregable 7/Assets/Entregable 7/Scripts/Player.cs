@@ -101,7 +101,11 @@ public class Player : MonoBehaviour
 
             // Posiciona y reproduce las partículas en la posición de ese GameObject
             explosionParticles.transform.position = other.gameObject.transform.position;
+            Instantiate(explosionParticles, transform.position,
+            explosionParticles.transform.rotation);
             explosionParticles.Play();
+
+
 
             // Destruye el otro GameObject
             Destroy(other.gameObject);
